@@ -14,9 +14,10 @@ async def on_ready():
 
 @bot.command()
 async def help(message):
-  embed = discord.Embed(title="Among Us Help",color=discord.Color.green)
+  embed = discord.Embed(title="Among Us Help",color=discord.Color.green())
   embed.add_field(name="us.setup",value="This command is used for setting up the bot when bot arrives into the server. The bot creates a channel named **among-us**.")
   embed.add_field(name="us.post", value="This command is used for posting your game code with other users. This only takes a 6 letter code and no other things.")
+  embed.add_field(name="Additional feature",value="You can chat in the bot's DM it works as a mod mail.")
   embed.set_footer(text="Prefix: us.")
   await message.channel.send(embed=embed)
   
@@ -46,9 +47,16 @@ async def post(message,code):
         await message.message.delete()
         for guild in bot.guilds:
             channel = discord.utils.get(guild.channels,name="among-us")
-            embed = discord.Embed(description=f"**{code.upper()}**")
+            embed = discord.Embed(description=f"**{code.upper()}**",color=discord.Color.red(),timestamp=message.created_at)
             embed.set_author(name=f"{message.author.name}#{message.author.discriminator}",icon_url=message.author.avatar_url)
-            embed.set_footer(text=f"{message.guild} {message.created_at.day}/{message.created_at.month}/{message.created_at.year} {message.created_at.hour}:{message.created_at.minure}",icon_url=message.guild.icon_url)
+            embed.set_footer(text=f"{message.guild.name",icon_url=message.guild.icon_url)
             channel.send(embed=embed)
 
+@bot.event
+async def on_message(message):
+  if isinstance(message.channel,discord.DMChannel):
+    embed = discord.Embed(description=message.content,color=discord.Color.green())
+    embed.set_author(name="{message.author.name}#{message.author.discriminator}",icon_url=message.author.avatar_url)
+    category = dicord.utils.get(bot.get_guild(752334684595290143).categories,name="Among Us Mod Mail")
+            
 bot.run("NzYyNTA2MjA4MjkxODQ4MjEy.X3qJPg.zoBQ9je5TJHtKAQtuCotXjOZsEU")
