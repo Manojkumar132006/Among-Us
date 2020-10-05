@@ -57,6 +57,21 @@ async def on_message(message):
   if isinstance(message.channel,discord.DMChannel):
     embed = discord.Embed(description=message.content,color=discord.Color.green())
     embed.set_author(name="{message.author.name}#{message.author.discriminator}",icon_url=message.author.avatar_url)
-    category = dicord.utils.get(bot.get_guild(752334684595290143).categories,name="Among Us Mod Mail")
+    category = discord.utils.get(bot.get_guild(752334684595290143).categories,name="Among Us Mod Mail")
+    channel = discord.utils.get(category.text_channels,name=f"{message.author.id}")
+    if channel:
+      channel.send(message.content)
+    else:
+      await category.create_text_channel(name=f"{message.author.id}")
+      embed = discord.Embed(description=f"{message.content}",color=discord.Color.red(),timestamp=message.created_at)
+      embed.set_author(name=f"{message.author.name}#{message.author.discriminator}",icon_url=message.author.avatar_url)
+      await channel.send(embed=embed)
+  elif message.guild == bot.get_guild(752334684595290143):
+      category = discord.utils.get(bot.get_guild(752334684595290143).categories,name="Among Us Mod Mail")
+      if message.channel in category.text_channels:
+        user = bot.get_user(int(message.channel.name))
+        embed = discord.Embed(description=f"{message.content}",color=discord.Color.red(),timestamp=message.created_at)
+        embed.set_author(name=f"{message.author.name}#{message.author.discriminator}",icon_url=message.author.avatar_url)
+        await user.send(embed=embed)
             
 bot.run("NzYyNTA2MjA4MjkxODQ4MjEy.X3qJPg.zoBQ9je5TJHtKAQtuCotXjOZsEU")
