@@ -17,6 +17,7 @@ async def help(message):
   embed = discord.Embed(title="Among Us Help",color=discord.Color.green)
   embed.add_field(name="us.setup",value="This command is used for setting up the bot when bot arrives into the server. The bot creates a channel named **among-us**.")
   embed.add_field(name="us.post", value="This command is used for posting your game code with other users. This only takes a 6 letter code and no other things.")
+  embed.set_footer(text="Prefix: us.")
   await message.channel.send(embed=embed)
   
 @bot.command()
@@ -47,7 +48,7 @@ async def post(message,code):
             channel = discord.utils.get(guild.channels,name="among-us")
             embed = discord.Embed(description=f"**{code.upper()}**")
             embed.set_author(name=f"{message.author.name}#{message.author.discriminator}",icon_url=message.author.avatar_url)
-            embed.set_footer(name=f"{message.guild} {message.created_at.day}/{message.created_at.month}/{message.created_at.year} {message.created_at.hour}:{message.created_at.minure}",icon_url=message.guild.icon_url)
+            embed.set_footer(text=f"{message.guild} {message.created_at.day}/{message.created_at.month}/{message.created_at.year} {message.created_at.hour}:{message.created_at.minure}",icon_url=message.guild.icon_url)
             channel.send(embed=embed)
 
 bot.run("NzYyNTA2MjA4MjkxODQ4MjEy.X3qJPg.zoBQ9je5TJHtKAQtuCotXjOZsEU")
