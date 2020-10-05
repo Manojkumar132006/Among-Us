@@ -35,11 +35,9 @@ async def post(message,code):
         await message.channel.send("The code must be alphabetical")
         break
       else:
+        await message.message.delete()
         for guild in bot.guilds:
-          channel = discord.utils.get(guild.channels,name="among-us")
-          if guild == message.guild:
-            pass
-          else:
+            channel = discord.utils.get(guild.channels,name="among-us")
             embed = discord.Embed(description=f"**{code.upper()}**")
             embed.set_author(name=f"{message.author.name}#{message.author.discriminator}",icon_url=message.author.avatar_url)
             embed.set_footer(name=f"{message.guild} {message.created_at.day}/{message.created_at.month}/{message.created_at.year} {message.created_at.hour}:{message.created_at.minure}",icon_url=message.guild.icon_url)
